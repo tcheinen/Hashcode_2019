@@ -21,6 +21,7 @@ int roundUp(float n) {
 int intersectionCount(vector<string> a, vector<string> b) {
     struct counting_iterator {
         size_t count;
+
         counting_iterator &operator++() {
             ++count;
             return *this;
@@ -28,6 +29,13 @@ int intersectionCount(vector<string> a, vector<string> b) {
     };
     size_t count = set_intersection(a.begin(), a.end(), b.begin(), b.end(), counting_iterator()).count;
     return count;
+}
+
+int interest(Slide a, Slide b) {
+    int intersection = intersectionCount(a.tags, b.tags);
+    int slide1 = a.tags.size() - intersection;
+    int slide2 = b.tags.size() - intersection;
+    return std::min(intersection, std::min(slide1, slide2));
 }
 
 vector<Slide> createSlide(vector<Photo> in) {
@@ -56,6 +64,7 @@ vector<Slide> createSlide(vector<Photo> in) {
         }
     }
     std::sort(slides.begin(), slides.end(), [](Slide a, Slide b) { return a.tags.size() > b.tags.size(); });
+
     return slides;
 }
 
