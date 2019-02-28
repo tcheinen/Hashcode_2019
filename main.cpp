@@ -38,6 +38,24 @@ int interest(Slide a, Slide b) {
     return std::min(intersection, std::min(slide1, slide2));
 }
 
+void sortSlides(vector<Slide> slideshow) {
+    for (int i = 0; i < slideshow.size(); i++) {
+        maxInt = 0;
+        maxIndex = i + 1;
+        for (int j = i+1; j < slideshow.size(); j++) {
+            int it = interest(slideshow[i], slideshow[j]);
+            if (it > maxInt) {
+                maxIndex = j;
+                maxInt = it;
+            }
+        }
+        
+            Slide temp = slideshow[maxIndex];
+            slideshow[maxIndex] = slideshow[i + 1];
+            slide[i + 1] = temp;
+    }
+}
+
 vector<Slide> createSlide(vector<Photo> in) {
     vector<Slide> slides;
     Photo temp(false, {}, 0);
