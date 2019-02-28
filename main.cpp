@@ -19,16 +19,13 @@ int roundUp(float n) {
 }
 
 int intersectionCount(vector<string> a, vector<string> b) {
-    struct counting_iterator {
-        size_t count;
-
-        counting_iterator &operator++() {
-            ++count;
-            return *this;
-        }
-    };
-    size_t count = set_intersection(a.begin(), a.end(), b.begin(), b.end(), counting_iterator()).count;
-    return count;
+    std::set<string> bs(b.begin(), b.end());
+    std::set<string> out;
+    for(int i = 0; i < a.size(); i++) {
+        const bool is_in = bs.find(a.at(i)) != bs.end();
+        if(is_in) out.insert(a.at(i));
+    }
+    return out.size();
 }
 
 int interest(Slide a, Slide b) {
@@ -38,21 +35,21 @@ int interest(Slide a, Slide b) {
     return std::min(intersection, std::min(slide1, slide2));
 }
 
-void sortSlides(vector<Slide> slideshow) {
-    for (int i = 0; i < slideshow.size(); i++) {
-        maxInt = 0;
-        maxIndex = i + 1;
+void sortSlides(vector<Slide>& slideshow) {
+    for (int i = 0; i < slideshow.size() - 1; i++) {
+        int maxInt = 0;
+        int maxIndex = i + 1;
         for (int j = i+1; j < slideshow.size(); j++) {
-            int it = interest(slideshow[i], slideshow[j]);
+            int it = interest(slideshow.at(i), slideshow.at(j));
             if (it > maxInt) {
                 maxIndex = j;
                 maxInt = it;
             }
         }
         
-            Slide temp = slideshow[maxIndex];
-            slideshow[maxIndex] = slideshow[i + 1];
-            slide[i + 1] = temp;
+            Slide temp = slideshow.at(maxIndex);
+            slideshow.at(maxIndex) = slideshow.at(i + 1);
+            slideshow.at(i + 1) = temp;
     }
 }
 
@@ -123,6 +120,7 @@ int main() {
         }
 
         vector<Slide> output = createSlide(photos);
+        sortSlides(output);
         ofstream outfile;
         outfile.open("../output/" + file + "_output.txt");
         outfile << vectorToString(output);
