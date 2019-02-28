@@ -97,6 +97,7 @@ int main() {
             {"a_example", "b_lovely_landscapes", "c_memorable_moments", "d_pet_pictures", "e_shiny_selfies"});
 //    vector<string> input({"c_memorable_moments"});
     for (string file: input) {
+        cout << file << endl;
         ifstream infile;
         infile.open("../input/" + file + ".txt");
         vector<Photo> photos;
