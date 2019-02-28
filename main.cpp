@@ -46,11 +46,11 @@ string vectorToString(vector<Slide> in) {
 }
 
 int main() {
-    vector<string> input({"a_example.txt", "b_lovely_landscapes.txt", "c_memorable_moments.txt", "d_pet_pictures.txt",
-                          "e_shiny_selfies.txt"});
+//    vector<string> input({"a_example.txt", "b_lovely_landscapes.txt", "c_memorable_moments.txt", "d_pet_pictures.txt", "e_shiny_selfies.txt"});
+    vector<string> input({"c_memorable_moments"});
     for (string file: input) {
         ifstream infile;
-        infile.open("../input/" + file);
+        infile.open("../input/" + file + ".txt");
         vector<Photo> photos;
         if (infile.is_open()) {
             int count;
