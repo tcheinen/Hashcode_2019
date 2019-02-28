@@ -37,6 +37,7 @@ int interest(Slide a, Slide b) {
 
 void sortSlides(vector<Slide>& slideshow) {
     for (int i = 0; i < slideshow.size() - 1; i++) {
+        cout << "i =" << i << endl;
         int maxInt = 0;
         int maxIndex = i + 1;
         for (int j = i+1; j < slideshow.size(); j++) {
