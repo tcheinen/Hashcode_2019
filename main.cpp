@@ -43,7 +43,7 @@ void sortSlides(vector<Slide> &slideshow) {
         if (i % 10000 == 0) cout << "i =" << i << endl;
         int maxInt = 0;
         int maxIndex = i + 1;
-        int range = i + 20 < slideshow.size() ? i + 20 : slideshow.size();
+        int range = i + 50 < slideshow.size() ? i + 50: slideshow.size();
         for (int j = i + 1; j < range; j++) {
             int it = interest(slideshow.at(i), slideshow.at(j));
             if (it > maxInt) {
