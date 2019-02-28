@@ -23,7 +23,7 @@ int main() {
                 tags.push_back(tag);
             }
             bool isHorizontal = !orientation.compare("H");
-            Photo p = Photo(isHorizontal).withTags(tags);
+            Photo p = Photo(isHorizontal, tags);
             photos.push_back(p);
         }
     }

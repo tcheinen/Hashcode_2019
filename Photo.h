@@ -8,9 +8,8 @@ class Photo {
 public:
     bool horizontal;
     std::vector<std::string> tags;
-    Photo(bool horizontal): horizontal(horizontal) {}
+    Photo(bool horizontal, std::vector<std::string> tags): horizontal(horizontal), tags(tags) {}
 
-    Photo withTags(std::vector<std::string> in);
 };
 
 
