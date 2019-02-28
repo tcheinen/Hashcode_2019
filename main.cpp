@@ -36,18 +36,22 @@ int interest(Slide a, Slide b) {
 }
 
 void sortSlides(vector<Slide>& slideshow) {
+
+//    std::sort(slideshow.begin(), slideshow.end(), [](Slide a, Slide b) { return interest(b, a) > 2; });
+
     for (int i = 0; i < slideshow.size() - 1; i++) {
-        cout << "i =" << i << endl;
+        if(i % 10000 == 0) cout << "i =" << i << endl;
         int maxInt = 0;
         int maxIndex = i + 1;
-        for (int j = i+1; j < slideshow.size(); j++) {
+        int range = i + 20 < slideshow.size() ? i + 20 : slideshow.size();
+        for (int j = i+1; j < range; j++) {
             int it = interest(slideshow.at(i), slideshow.at(j));
             if (it > maxInt) {
                 maxIndex = j;
                 maxInt = it;
             }
         }
-        
+
             Slide temp = slideshow.at(maxIndex);
             slideshow.at(maxIndex) = slideshow.at(i + 1);
             slideshow.at(i + 1) = temp;
