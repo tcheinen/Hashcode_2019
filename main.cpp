@@ -6,8 +6,29 @@
 #include <algorithm>
 #include "Photo.h"
 #include "Slide.h"
+#include <cmath>
 
 using namespace std;
+
+int roundUp(float n) {
+    if (n - ((int) n) >= 0.5) {
+        return ceil(n);
+    } else {
+        return floor(n);
+    }
+}
+
+int intersectionCount(vector<string> a, vector<string> b) {
+    struct counting_iterator {
+        size_t count;
+        counting_iterator &operator++() {
+            ++count;
+            return *this;
+        }
+    };
+    size_t count = set_intersection(a.begin(), a.end(), b.begin(), b.end(), counting_iterator()).count;
+    return count;
+}
 
 vector<Slide> createSlide(vector<Photo> in) {
     vector<Slide> slides;
@@ -34,7 +55,7 @@ vector<Slide> createSlide(vector<Photo> in) {
             inProgress = false;
         }
     }
-    std::sort(slides.begin(), slides.end(), [](Slide a, Slide b){ return a.tags.size() > b.tags.size(); });
+    std::sort(slides.begin(), slides.end(), [](Slide a, Slide b) { return a.tags.size() > b.tags.size(); });
     return slides;
 }
 
@@ -48,7 +69,8 @@ string vectorToString(vector<Slide> in) {
 }
 
 int main() {
-    vector<string> input({"a_example", "b_lovely_landscapes", "c_memorable_moments", "d_pet_pictures", "e_shiny_selfies"});
+    vector<string> input(
+            {"a_example", "b_lovely_landscapes", "c_memorable_moments", "d_pet_pictures", "e_shiny_selfies"});
 //    vector<string> input({"c_memorable_moments"});
     for (string file: input) {
         ifstream infile;
