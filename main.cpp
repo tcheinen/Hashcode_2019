@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <set>
+#include <algorithm>
 #include "Photo.h"
 #include "Slide.h"
 
@@ -33,6 +34,7 @@ vector<Slide> createSlide(vector<Photo> in) {
             inProgress = false;
         }
     }
+    std::sort(slides.begin(), slides.end(), [](Slide a, Slide b){ return a.tags.size() > b.tags.size(); });
     return slides;
 }
 
@@ -46,8 +48,8 @@ string vectorToString(vector<Slide> in) {
 }
 
 int main() {
-//    vector<string> input({"a_example.txt", "b_lovely_landscapes.txt", "c_memorable_moments.txt", "d_pet_pictures.txt", "e_shiny_selfies.txt"});
-    vector<string> input({"c_memorable_moments"});
+    vector<string> input({"a_example", "b_lovely_landscapes", "c_memorable_moments", "d_pet_pictures", "e_shiny_selfies"});
+//    vector<string> input({"c_memorable_moments"});
     for (string file: input) {
         ifstream infile;
         infile.open("../input/" + file + ".txt");
