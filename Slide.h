@@ -19,6 +19,14 @@ public:
       }
     }
 
+    friend ostream& operator<<(ostream& os, const Slide& s)
+    {
+      if (s.photo.size() == 1) 
+        os << s.photo[0].id;
+      else
+        os << s.photo[0].id << " " << s.photo[1].id;
+      return os;
+    }
 };
 
 
