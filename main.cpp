@@ -35,14 +35,14 @@ vector<Slide> createSlide(vector<Photo> in) {
     return slides;
 }
 
-//string vectorToString(vector<Slide> in) {
-//    stringstream ss;
-//    ss << "{";
-//    for(Slide s: in) {
-//        ss << s << ", "
-//    }
-//    ss << "}";
-//}
+string vectorToString(vector<Slide> in) {
+    stringstream ss;
+    ss << in.size() << endl;
+    for(Slide s: in) {
+        ss << s << endl;
+    }
+    return ss.str();
+}
 
 int main() {
     ifstream infile;
@@ -68,7 +68,10 @@ int main() {
     }
 
     vector<Slide> output = createSlide(photos);
-
+    ofstream outfile;
+    outfile.open("../output.txt");
+    outfile << vectorToString(output);
+    outfile.close();
     return 0;
 }
 
