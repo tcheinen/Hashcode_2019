@@ -15,7 +15,7 @@ public:
     vector<Photo> photo;
     Slide(vector<Photo> phts, bool isV = false): doesContainVimages(isV) {
       for(Photo p : phts) {
-        photo.pushback(p);
+        photo.push_back(p);
       }
     }
 
