@@ -21,9 +21,9 @@ int roundUp(float n) {
 int intersectionCount(vector<string> a, vector<string> b) {
     std::set<string> bs(b.begin(), b.end());
     std::set<string> out;
-    for(int i = 0; i < a.size(); i++) {
+    for (int i = 0; i < a.size(); i++) {
         const bool is_in = bs.find(a.at(i)) != bs.end();
-        if(is_in) out.insert(a.at(i));
+        if (is_in) out.insert(a.at(i));
     }
     return out.size();
 }
@@ -35,16 +35,16 @@ int interest(Slide a, Slide b) {
     return std::min(intersection, std::min(slide1, slide2));
 }
 
-void sortSlides(vector<Slide>& slideshow) {
+void sortSlides(vector<Slide> &slideshow) {
 
 //    std::sort(slideshow.begin(), slideshow.end(), [](Slide a, Slide b) { return interest(b, a) > 2; });
 
     for (int i = 0; i < slideshow.size() - 1; i++) {
-        if(i % 10000 == 0) cout << "i =" << i << endl;
+        if (i % 10000 == 0) cout << "i =" << i << endl;
         int maxInt = 0;
         int maxIndex = i + 1;
         int range = i + 20 < slideshow.size() ? i + 20 : slideshow.size();
-        for (int j = i+1; j < range; j++) {
+        for (int j = i + 1; j < range; j++) {
             int it = interest(slideshow.at(i), slideshow.at(j));
             if (it > maxInt) {
                 maxIndex = j;
@@ -52,40 +52,37 @@ void sortSlides(vector<Slide>& slideshow) {
             }
         }
 
-            Slide temp = slideshow.at(maxIndex);
-            slideshow.at(maxIndex) = slideshow.at(i + 1);
-            slideshow.at(i + 1) = temp;
+        Slide temp = slideshow.at(maxIndex);
+        slideshow.at(maxIndex) = slideshow.at(i + 1);
+        slideshow.at(i + 1) = temp;
     }
 }
 
 vector<Slide> createSlide(vector<Photo> in) {
-    vector<Slide> slides;
-    Photo temp(false, {}, 0);
-    bool inProgress = false;
-    for (int i = 0; i < in.size(); i++) {
-        if (in.at(i).horizontal) {
-            Slide slide({in.at(i)});
-            slide.tags = in.at(i).tags;
-            slides.push_back(slide);
-            continue;
-        }
-        if (!inProgress) {
-            temp = in.at(i);
-            inProgress = true;
+    vector<Photo> horizontals;
+    vector<Photo> verticals;
+    for (Photo p: in) {
+        if (p.horizontal) {
+            horizontals.push_back(p);
         } else {
-            Slide slide({temp, in.at(i)}, true);
-            std::set<string> u(temp.tags.begin(), temp.tags.end());
-            std::copy(in.at(i).tags.begin(), in.at(i).tags.end(), std::inserter(u, u.end()));
-            vector<string> tags(u.begin(), u.end());
-            slide.tags = tags;
-            slides.push_back(slide);
-            temp = Photo(false, {}, 0);
-            inProgress = false;
+            verticals.push_back(p);
         }
     }
-    std::sort(slides.begin(), slides.end(), [](Slide a, Slide b) { return a.tags.size() > b.tags.size(); });
+    vector<Slide> outslide;
+    for (Photo p: horizontals) {
+        Slide s({p});
+        outslide.push_back(s);
+    }
+    std::sort(verticals.begin(), verticals.end(), [](Photo a, Photo b) { return a.tags.size() > b.tags.size(); });
+    for (int i = 0; i < verticals.size() / 2; i++) {
+        Slide s = Slide({verticals.at(i), verticals.at(verticals.size() - i - 1)}, true);
+        outslide.push_back(s);
+    }
 
-    return slides;
+
+    std::sort(outslide.begin(), outslide.end(), [](Slide a, Slide b) { return a.tags.size() > b.tags.size(); });
+
+    return outslide;
 }
 
 string vectorToString(vector<Slide> in) {
