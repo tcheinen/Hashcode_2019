@@ -29,3 +29,20 @@ int main() {
     }
     return 0;
 }
+
+vector<Slide> createSlide(vector<Photo> in) {
+    vector<Slide> slides;
+    Photo temp(false,{});
+    bool inProgress = false;
+    for(int i = 0; i < in.size(); i++) {
+        if(in.at(i).horizontal) {
+            Slide slide(in.at(i));
+        }
+        if(!inProgress ) {
+            temp = in.at(i);
+            inProgress = true;
+        } else {
+            Slide slide({temp, in.at(i)});
+        }
+    }
+}
